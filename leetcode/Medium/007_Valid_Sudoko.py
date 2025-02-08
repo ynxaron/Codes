@@ -22,4 +22,3 @@ def valid_sudoko(inp: list[list[str]]) -> bool:
             cols[c].append(inp[r][c])
             sqrs[(r // 3, c // 3)].append(inp[r][c])
     return True
-
