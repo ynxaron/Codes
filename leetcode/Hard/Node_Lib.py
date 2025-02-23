@@ -1,4 +1,3 @@
-# We are defining a Node class, with several useful methods predefined
 class Node:
     def __init__(self):
         self.val = None
@@ -41,9 +40,22 @@ class Node:
     def print(self):
         print(self.to_string())
 
+    # using an iterative reversing algorithm
+    def reverse(self):
+        root = self
+        tail = root
+        prev, curr = None, tail
+        while curr is not None:
+            next = curr.next
+            curr.next = prev
+            prev = curr
+            curr = next
+        return prev
+
+    # converting a linked list to an integer, where element on the left have smaller power
     def to_num(self) -> int:
         ans = 0
-        pow = 1
+        pow = 1 # creating a power variable that would determine by how much we should multiply
         while self is not None:
             ans += (pow * self.val)
             pow *= 10
@@ -51,6 +63,7 @@ class Node:
         return ans
 
     @staticmethod
+    # taking the last values that can be '%', and putting it in a Node
     def from_num(init: int):
         root = Node()
         tail = root
@@ -58,6 +71,10 @@ class Node:
             tail.val = (init % 10)
             init = init // 10
             if init != 0:
+                # this because if init is 0, that is we cannot append more values, then we must not
+                # create more Nodes. Without this inner condition there would be an extra None
+                # that would keep being pointed at simply because we would have no way to know if,
+                # in this particular loop, before init // 10, init had been made 0
                 tail.next = Node()
             tail = tail.next
         return root

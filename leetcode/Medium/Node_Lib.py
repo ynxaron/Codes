@@ -1,4 +1,3 @@
-# We are defining a Node class, with several useful methods predefined
 class Node:
     def __init__(self):
         self.val = None
@@ -40,6 +39,18 @@ class Node:
 
     def print(self):
         print(self.to_string())
+
+    # using an iterative reversing algorithm
+    def reverse(self):
+        root = self
+        tail = root
+        prev, curr = None, tail
+        while curr is not None:
+            next = curr.next
+            curr.next = prev
+            prev = curr
+            curr = next
+        return prev
 
     # converting a linked list to an integer, where element on the left have smaller power
     def to_num(self) -> int:
