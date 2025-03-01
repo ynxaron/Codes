@@ -81,11 +81,9 @@ class Node:
 
     @staticmethod
     def append_node(n, m):
-        if n is None:
-            return m
         head = n
         tail = head
-        while tail is not None:
+        while tail.next is not None:
             tail = tail.next
         tail.next = m
         return head
@@ -100,7 +98,3 @@ class Node:
                 tail.next = tail.next.next
             tail = tail.next
         return root
-
-n = Node.create([2, 6, 5])
-m = Node.create([1, 3, 7])
-Node.append_node(n, m).print()
