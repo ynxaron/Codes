@@ -79,6 +79,17 @@ class Node:
             tail = tail.next
         return root
 
+    @staticmethod
+    def append_node(n, m):
+        if n is None:
+            return m
+        head = n
+        tail = head
+        while tail is not None:
+            tail = tail.next
+        tail.next = m
+        return head
+
     def remove_nones(self):
         root = self # creating a root variable so that head begins where None stops being prefixed
         while root.val is None: # if root.val is None, that is it has None there
@@ -89,3 +100,7 @@ class Node:
                 tail.next = tail.next.next
             tail = tail.next
         return root
+
+n = Node.create([2, 6, 5])
+m = Node.create([1, 3, 7])
+Node.append_node(n, m).print()
