@@ -44,3 +44,14 @@ class BinaryTree:
             tree_queue.append(tree.left)  # appending left
             tree_queue.append(tree.right) # appending right
         return return_tree
+
+    # The crux of this algorithm is to use take the max height that came from left child, right child,
+    # add 1 to that max and return that. Since the maximum depth node is either in left child or right child
+    # this works, and since we have answer from one level lower, we must add 1 to the answer
+    def height(self) -> int:
+        leftHeight, rightHeight = 0, 0
+        if self.left is not None and self.left.val is not None: # checking if 'left' node is valid
+            leftHeight = self.left.height()
+        if self.right is not None and self.right.val is not None: # checking if 'right' node is valid
+            rightHeight = self.right.height()
+        return max(leftHeight, rightHeight) + 1 # compensating since we searched from one depth lower
