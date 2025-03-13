@@ -62,6 +62,7 @@ class BinaryTree:
         return max(leftHeight, rightHeight) + 1 # compensating since we searched from one depth lower
 
     # This function checks for equality by checking if each node is equal to the other
+    # THIS FUNCTION IS NOT WORKING
     def equal(self, another) -> bool:
         if self.val is None and another.val is None:
             return True
@@ -74,12 +75,24 @@ class BinaryTree:
     # This function converts a BST to a sorted array. First it appends all values
     # at the left subtree, appends value at current node, then appends all value at
     # a right subtree
-    def BST_to_list(self) -> list[int]:
+    def to_inorder(self) -> list[int]:
         def helper(tree, array: list[int]):
             if tree.left is not None:
                 helper(tree.left, array)
             if tree.val is not None:
                 array.append(tree.val)
+            if tree.right is not None:
+                helper(tree.right, array)
+        array = []
+        helper(self, array)
+        return array
+
+    def to_preorder(self) -> list[int]:
+        def helper(tree, array: list[int]):
+            if tree.val is not None:
+                array.append(tree.val)
+            if tree.left is not None:
+                helper(tree.left, array)
             if tree.right is not None:
                 helper(tree.right, array)
         array = []
