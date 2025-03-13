@@ -8,29 +8,34 @@ class BinaryTree:
     # the crux of printing algorithm is to use a queue such that we print the values of
     # current tree, then append to the right, if available, it's left child, if available it's
     # right child, and then pop this value that we have appended
-    def to_string(self) -> str:
-        return_string = ""
-        tree_queue = [self] # beginning with the seed value
-        while len(tree_queue) > 0: # while there is an element in our list to append / print
-            new_tree_queue = [] # to replace this new queue since we are iterating over current vals
-            this_str = ""
-            for tree in tree_queue: # printing all the values
-                this_str += str(tree.val) + " "
-                if tree.left is not None and tree.left.val is not None: # then appending over our new list
-                    new_tree_queue.append(tree.left)
-                if tree.right is not None and tree.right.val is not None:
-                    new_tree_queue.append(tree.right)
-            return_string += this_str + "\n" # marking with a demarketer
-            tree_queue = new_tree_queue
-        return return_string
-
     def print(self):
         print(self.to_string())
+
+    # using a 'padding' variable such that it represents roughly the length
+    # of the last level (that would ultimately decide shape of the tree)
+    def to_string(self) -> str:
+        padding = " " * (2 ** (self.height() + 1)) # the appropriate space in between each nodes
+        this_queue = [self]
+        return_str = ""
+        while this_queue != []:
+            this_str = ""
+            new_queue = []
+            for node in this_queue:
+                this_str += padding + (str(node.val) if node.val is not None else 'X')
+                if node.left is not None:
+                    new_queue.append(node.left)
+                if node.right is not None:
+                    new_queue.append(node.right)
+            padding = padding[:len(padding) // 2] # halving the padding each level that we passes
+            return_str += this_str + "\n"
+            this_str = ""
+            this_queue = new_queue
+        return return_str
 
     @staticmethod
     # the crux of the creating algorithm is to use a queue as well, iterating over the values
     # and appending to the right a left child and a right child
-    def create(init: list[int]):
+    def create(init: list[int | None]):
         return_tree = BinaryTree()
         tree_queue = [return_tree]
         for val in init:
@@ -55,3 +60,28 @@ class BinaryTree:
         if self.right is not None and self.right.val is not None: # checking if 'right' node is valid
             rightHeight = self.right.height()
         return max(leftHeight, rightHeight) + 1 # compensating since we searched from one depth lower
+
+    # This function checks for equality by checking if each node is equal to the other
+    def equal(self, another) -> bool:
+        if self.val is None and another.val is None:
+            return True
+        if self.val is None or another.val is None:
+            return False
+        if self.val == another.val:
+            return self.left.equal(another.left) and self.right.equal(another.right)
+        return False
+
+    # This function converts a BST to a sorted array. First it appends all values
+    # at the left subtree, appends value at current node, then appends all value at
+    # a right subtree
+    def BST_to_list(self) -> list[int]:
+        def helper(tree, array: list[int]):
+            if tree.left is not None:
+                helper(tree.left, array)
+            if tree.val is not None:
+                array.append(tree.val)
+            if tree.right is not None:
+                helper(tree.right, array)
+        array = []
+        helper(self, array)
+        return array
