@@ -72,9 +72,9 @@ class BinaryTree:
             return self.left.equal(another.left) and self.right.equal(another.right)
         return False
 
-    # This function converts a BST to a sorted array. First it appends all values
+    # This function converts a tree to a sorted array. First it appends all values
     # at the left subtree, appends value at current node, then appends all value at
-    # a right subtree
+    # a right subtree.
     def to_inorder(self) -> list[int]:
         def helper(tree, array: list[int]):
             if tree.left is not None:
@@ -87,6 +87,8 @@ class BinaryTree:
         helper(self, array)
         return array
 
+    # This function concerts a tree to a preorder path, which first appends current value
+    # then goes to left subtree, then goes to right subtree
     def to_preorder(self) -> list[int]:
         def helper(tree, array: list[int]):
             if tree.val is not None:
@@ -98,3 +100,15 @@ class BinaryTree:
         array = []
         helper(self, array)
         return array
+
+    # This returns the maximum value that could be taken from a tree
+    def maximum_value(self) -> int:
+        # if subtree is None, simply return 0
+        if self is None or self.val is None:
+            return 0
+        # consider left and right value if sum is positive
+        l = max(self.left.maximum_value(), 0)
+        r = max(self.right.maximum_value(), 0)
+        # see if adding the current tree.val, a possible negative value
+        # would make the total sum less than 0. Discard if it does
+        return max((self.val + max(l, r)), 0)
