@@ -28,8 +28,6 @@ def serialize_and_deserialize():
             except:    # else simply just append None, which would be the only thing left
                 init.append(None)
 
-        if len(init) == 0: # if there are no Nodes left, returning a BT()
-            return BT()
         tree = BT()
         q: list[BT | None] = [tree]
         for v in init:
