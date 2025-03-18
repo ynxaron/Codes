@@ -1,8 +1,3 @@
-# A little Concern. Say we add the word "Apple", then the word "Amp",
-# then the dictionary of second word 'p' in 'Apple' and second word 'm'
-# are not the same dictionary, hence they would not be pointing to the
-# same 'p' in the third value at both of the word. Perhaps that is by design,
-# or perhaps, idk
 class TrieNode:
     # the val of the (key, val) pair in the Trie Data Structure
     def __init__(self):
