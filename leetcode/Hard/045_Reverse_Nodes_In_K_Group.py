@@ -27,7 +27,8 @@ def reverse_nodes_in_k_group(n: Node, k: int) -> Node:
                     root = curr
                 if b is not None: # if previous batches had been reversed, knit it back
                     b.next = curr
-                b = m # updating b, n, and m
+                # updating b, n, m
+                b = m
                 n = nxt
                 m = n
         else:
@@ -37,5 +38,6 @@ def reverse_nodes_in_k_group(n: Node, k: int) -> Node:
         b.next = n
     return root
 
-n = Node.create([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
-reverse_nodes_in_k_group(n, 5).print()
+# n = Node.create([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
+# n.print()
+# reverse_nodes_in_k_group(n, 3).print()
