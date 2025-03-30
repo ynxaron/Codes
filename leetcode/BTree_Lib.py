@@ -14,11 +14,13 @@ class BinaryTree:
     # using a 'padding' variable such that it represents roughly the length
     # of the last level (that would ultimately decide shape of the tree)
     def to_string(self) -> str:
-        padding = " " * (2 ** (self.height() + 1)) # the appropriate space in between each nodes
+        padding = " " * (
+            2 ** (self.height() + 1)
+        )  # the appropriate space in between each nodes
         this_queue = [self]
         return_str = ""
-        while this_queue != []: # while there are elements to be printed
-            this_str = "" # in where our values would be appended
+        while this_queue != []:  # while there are elements to be printed
+            this_str = ""  # in where our values would be appended
             new_queue = []
             for node in this_queue:
                 if node.val is not None:
@@ -27,7 +29,9 @@ class BinaryTree:
                         new_queue.append(node.left)
                     if node.right is not None:
                         new_queue.append(node.right)
-            padding = padding[:len(padding) // 2] # halving the padding each level that we passes
+            padding = padding[
+                : len(padding) // 2
+            ]  # halving the padding each level that we passes
             return_str += this_str + "\n"
             this_queue = new_queue
         return return_str
@@ -47,7 +51,7 @@ class BinaryTree:
             # and we would go a level down only after all nodes in the current level have been
             # exhausted
             tree_queue.append(tree.left)  # appending left
-            tree_queue.append(tree.right) # appending right
+            tree_queue.append(tree.right)  # appending right
         return return_tree
 
     # The crux of this algorithm is to use take the max height that came from left child, right child,
@@ -55,11 +59,17 @@ class BinaryTree:
     # this works, and since we have answer from one level lower, we must add 1 to the answer
     def height(self) -> int:
         leftHeight, rightHeight = 0, 0
-        if self.left is not None and self.left.val is not None: # checking if 'left' node is valid
+        if (
+            self.left is not None and self.left.val is not None
+        ):  # checking if 'left' node is valid
             leftHeight = self.left.height()
-        if self.right is not None and self.right.val is not None: # checking if 'right' node is valid
+        if (
+            self.right is not None and self.right.val is not None
+        ):  # checking if 'right' node is valid
             rightHeight = self.right.height()
-        return max(leftHeight, rightHeight) + 1 # compensating since we searched from one depth lower
+        return (
+            max(leftHeight, rightHeight) + 1
+        )  # compensating since we searched from one depth lower
 
     # This function checks for equality by checking if each node is equal to the other
     # THIS FUNCTION IS NOT WORKING
@@ -83,6 +93,7 @@ class BinaryTree:
                 array.append(tree.val)
             if tree.right is not None:
                 helper(tree.right, array)
+
         array = []
         helper(self, array)
         return array
@@ -97,6 +108,7 @@ class BinaryTree:
                 helper(tree.left, array)
             if tree.right is not None:
                 helper(tree.right, array)
+
         array = []
         helper(self, array)
         return array
